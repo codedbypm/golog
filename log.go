@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"cloud.google.com/go/logging"
-	"github.com/joho/godotenv"
 )
 
 // GoLogger is the default agora logger
@@ -22,12 +21,6 @@ var cloudLogger *logging.Logger
 var localLogger *log.Logger
 
 func init() {
-	// load .env file
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
-
 	gCloudProjectID := os.Getenv("GOOGLE_CLOUD_PROJECT_ID")
 	cloudLogger = createGCloudLogger(gCloudProjectID)
 	localLogger = log.New(os.Stdout, "[Local]: ", 0)
