@@ -32,7 +32,7 @@ func createGCloudLogger(projectID string) *logging.Logger {
 		log.Fatalf("Failed to create client: %v", err)
 	}
 
-	logName := "jaspergif-log"
+	logName := projectID + ".log"
 	return loggingClient.Logger(logName)
 }
 
