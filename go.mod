@@ -1,6 +1,6 @@
 module github.com/codedbypm/golog
 
-go 1.15.2
+go 1.15
 
 require (
 	cloud.google.com/go v0.67.0 // indirect
