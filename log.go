@@ -31,14 +31,20 @@ func createGCloudLogger(projectID string) *logging.Logger {
 	return loggingClient.Logger(logName)
 }
 
-// Debug is
+// Debug is fantastic
 func (log *GoLogger) Debug(v ...interface{}) {
 	localLogger.Println(v...)
 	cloudLogger.StandardLogger(logging.Debug).Println(v...)
 }
 
-// Error ...
+// Error is amazing
 func (log *GoLogger) Error(e error) {
 	localLogger.Println(e)
 	cloudLogger.StandardLogger(logging.Error).Println(e)
+}
+
+// Fatal is great
+func (log *GoLogger) Fatal(e error) {
+	cloudLogger.StandardLogger(logging.Error).Println(e)
+	localLogger.Fatal(e)
 }
