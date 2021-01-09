@@ -9,21 +9,16 @@ import (
 )
 
 // GoLogger is the default agora logger
-type GoLogger interface {
-	Debug(json []byte)
-	Error(e error)
-}
-
-// Logger ...
-var Logger *GoLogger
+type GoLogger struct{}
 
 var cloudLogger *logging.Logger
 var localLogger *log.Logger
 
-func init() {
-	gCloudProjectID := os.Getenv("GOOGLE_CLOUD_PROJECT_ID")
-	cloudLogger = createGCloudLogger(gCloudProjectID)
+// New is the next thing
+func New(projectID string) *GoLogger {
+	cloudLogger = createGCloudLogger(projectID)
 	localLogger = log.New(os.Stdout, "[Local]: ", 0)
+	return &GoLogger{}
 }
 
 func createGCloudLogger(projectID string) *logging.Logger {
@@ -37,13 +32,13 @@ func createGCloudLogger(projectID string) *logging.Logger {
 }
 
 // Debug is
-func Debug(v ...interface{}) {
+func (log *GoLogger) Debug(v ...interface{}) {
 	localLogger.Println(v...)
 	cloudLogger.StandardLogger(logging.Debug).Println(v...)
 }
 
 // Error ...
-func Error(e error) {
+func (log *GoLogger) Error(e error) {
 	localLogger.Println(e)
 	cloudLogger.StandardLogger(logging.Error).Println(e)
 }
